@@ -37,7 +37,7 @@ const ProjectsList = (props) => {
             <MySpinner />
             :
             projectsContainer.projects.map((elem) => {
-                return <Card className="m-3 cursor-pointer" key={elem.ID} >
+                return <Card className="m-3" key={elem.ID} >
                     <Card.Header>
                         <Card.Text>
                             <Link
@@ -51,7 +51,7 @@ const ProjectsList = (props) => {
                             >
                                 {elem.project_name}
                             </Link>
-                            <span className="mb-0 float-right">{elem.created_date}</span>
+                            <span class="mb-0 float-right text-muted">{elem.created_date}</span>
                         </Card.Text>
                     </Card.Header>
                     <Card.Body>
