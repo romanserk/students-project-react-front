@@ -51,7 +51,7 @@ const ProjectsList = (props) => {
                             >
                                 {elem.project_name}
                             </Link>
-                            <span class="mb-0 float-right text-muted">{elem.created_date}</span>
+                            <span class="mb-0 float-right text-muted">{elem.created_date.split("-").reverse().join("-")}</span>
                         </Card.Text>
                     </Card.Header>
                     <Card.Body>
