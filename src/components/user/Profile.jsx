@@ -82,6 +82,10 @@ const Profile = (props) => {
                                             <td>Email</td>
                                             <td>{user.email}</td>
                                         </tr>
+                                        <tr>
+                                            <td>Github profile</td>
+                                            <td><a href={user.github_profile} target="_blanck">{user.github_profile}</a></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 {canLogOut(context)}

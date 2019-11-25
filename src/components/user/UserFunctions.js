@@ -7,7 +7,8 @@ export const register = newUser => {
         .post('https://infinite-plains-84143.herokuapp.com/users/register', {
             user_name: newUser.user_name,
             email: newUser.email,
-            password: newUser.password
+            password: newUser.password,
+            github_profile: newUser.github_profile
         }).then(response => {
             return response.data
         })

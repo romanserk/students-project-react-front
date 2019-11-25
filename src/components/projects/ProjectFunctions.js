@@ -42,7 +42,6 @@ export const getSingleProjectFromServer = (name, userID) => {
                 }
             })
         .then(response => {
-            console.log(response)
             return response.data.data;
         })
         .catch(err => console.log(err))

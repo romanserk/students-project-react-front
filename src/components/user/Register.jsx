@@ -6,7 +6,8 @@ const Register = (props) => {
     const [userToRegister, setUserToRegister] = useState({
         user_name: '',
         email: '',
-        password: ''
+        password: '',
+        github_profile: ''
     })
 
 
@@ -24,7 +25,8 @@ const Register = (props) => {
         const newUser = {
             user_name: userToRegister.user_name,
             email: userToRegister.email,
-            password: userToRegister.password
+            password: userToRegister.password,
+            github_profile: userToRegister.github_profile
         }
 
         register(newUser).then(res => {
@@ -60,6 +62,18 @@ const Register = (props) => {
                                 onChange={onChange}
                             />
                         </div>
+                        <div className="form-group">
+                            <label htmlFor="github_profile">github profile</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="github_profile"
+                                placeholder="your github profile"
+                                value={userToRegister.github_profile}
+                                onChange={onChange}
+                            />
+                        </div>
+
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
                             <input
