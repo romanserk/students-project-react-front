@@ -56,7 +56,10 @@ const Login = (props) => {
                     <form noValidate onSubmit={onSubmit}>
                         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                         <div className="form-group">
-                            {validUser ? null : <p className='text-danger'>Invalid username or password</p>}
+                            {
+                                /* show if username or password is invalid */
+                                validUser ? null : <p className='text-danger'>Invalid username or password</p>
+                            }
                             <label htmlFor="user_name">User Name</label>
                             <input
                                 type="text"

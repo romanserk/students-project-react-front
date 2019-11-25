@@ -48,7 +48,6 @@ const AddProject = (props) => {
         });
 
         addNewProject(newProject).then(res => {
-            // project tools string remove all separators like white space and commas
             addProjectTools(newProject.projectTools, res.ID)
         });
     }
