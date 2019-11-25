@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { getProjectsFromServer } from './ProjectFunctions'
 

@@ -9,11 +9,11 @@ const NavBar = () => {
 
     return (
 
-        <Navbar bg="primary" variant="dark" expand="sm" >
+        <Navbar collapseOnSelect bg="primary" sticky="top" variant="dark" expand="lg" >
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <NavLink to="/" className="ml-5 mr-5 p-2 color-white link-hover">Home</NavLink>
+                    <NavLink to="/" className="ml-4 mr-4 p-2 color-white link-hover">Home</NavLink>
                     <AuthNavItems />
                 </Nav>
                 <Form inline>

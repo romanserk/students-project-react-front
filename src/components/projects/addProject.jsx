@@ -13,7 +13,8 @@ const AddProject = (props) => {
         project_name: '',
         description: '',
         projectTools: [''],
-        userID: ''
+        userID: '',
+        git_link: ''
     })
 
     const onChange = (event, index) => {
@@ -84,6 +85,15 @@ const AddProject = (props) => {
                                 as="textarea"
                                 name="description"
                                 value={projectToAdd.description}
+                                onChange={onChange}
+                            />
+                        </InputGroup>
+                        <InputGroup className="mb-3">
+                            <FormControl
+                                placeholder="github link"
+                                type="text"
+                                name="git_link"
+                                value={projectToAdd.git_link}
                                 onChange={onChange}
                             />
                         </InputGroup>

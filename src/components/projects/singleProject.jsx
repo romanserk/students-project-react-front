@@ -3,6 +3,7 @@ import { Card, Container, Row, Col } from 'react-bootstrap';
 import AuthContext from '../../context/authContext';
 import jwt_decode from 'jwt-decode';
 import MySpinner from '../hoc/Spinner'
+import { Link } from 'react-router-dom';
 
 
 import { getSingleProjectFromServer, joinProject, removeProject, leaveProject } from './ProjectFunctions'
@@ -81,7 +82,15 @@ const SingleProject = (props) => {
                     <Card.Body>
                         <Card.Title>{project.project_name}</Card.Title>
                         <Card.Text>{project.description}</Card.Text>
-                        <Row>
+                        <Row className="mb-2">
+                            <Col sm={2}>
+                                <Card.Text>Github repository </Card.Text>
+                            </Col>
+                            <Col sm={10}>
+                                <a href={project.git_link} target="_blanck">{project.git_link}</a>
+                            </Col>
+                        </Row>
+                        <Row className="mb-2">
                             <Col sm={2}>
                                 <Card.Text>Tools: </Card.Text>
                             </Col>
@@ -97,7 +106,7 @@ const SingleProject = (props) => {
                                 </ul>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row className="mb-2">
                             <Col sm={2}>
                                 <Card.Text>Participants: </Card.Text>
                             </Col>
@@ -106,7 +115,16 @@ const SingleProject = (props) => {
                                     {project.participants && project.participants.map((participant) => {
                                         return (
                                             <li key={participant.id} className="mr-5 list-inline-item">
-                                                <Card.Text className="mb-0">{participant.user.user_name}</Card.Text>
+                                                <Link
+                                                    to={{
+                                                        pathname: '/profile/' + participant.user.user_name,
+                                                        state: {
+                                                            user: participant.user.user_name
+                                                        }
+                                                    }}
+                                                >
+                                                    <span >{participant.user.user_name}</span>
+                                                </Link>
                                             </li>
                                         )
                                     })}
@@ -118,7 +136,7 @@ const SingleProject = (props) => {
                         <ProjectButton project={project} joinHandler={joinHandler} leaveHandler={leaveHandler} participant={participant} deleteHandler={deleteHandler} />
                     </Card.Footer>
                 </Card >
-            </Container>
+            </Container >
 
 
     )
