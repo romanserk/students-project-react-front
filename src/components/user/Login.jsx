@@ -19,7 +19,6 @@ const Login = (props) => {
         setUser(user => {
             return { ...user, [name]: value };
         });
-        setValidUser(true)
     }
 
 
@@ -34,7 +33,9 @@ const Login = (props) => {
 
         login(userToSubmit)
             .then(res => {
-                if (res.response && !res.response.data.error) {
+                if (res.response && res.response.data.error) {
+                    setValidUser(false)
+                } else {
                     localStorage.setItem('user_login', `${localStorage.usertoken}`);
                     props.setUserLoggedIn(true);
 
@@ -42,16 +43,10 @@ const Login = (props) => {
                         pathname: `/profile/${userToSubmit.user_name}`,
                         state: { user: userToSubmit.user_name }
                     })
-                } else {
-                    setValidUser(false)
-                    setUser({
-                        user_name: '',
-                        password: ''
-                    })
+
                 }
             })
     }
-
 
 
     return (
@@ -61,7 +56,10 @@ const Login = (props) => {
                     <form noValidate onSubmit={onSubmit}>
                         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                         <div className="form-group">
-                            {validUser ? null : <p className='text-danger'>Invalid username or password</p>}
+                            {
+                                /* show if username or password is invalid */
+                                validUser ? null : <p className='text-danger'>Invalid username or password</p>
+                            }
                             <label htmlFor="user_name">User Name</label>
                             <input
                                 type="text"
