@@ -45,7 +45,8 @@ const AddProject = (props) => {
             project_name: '',
             description: '',
             projectTools: [''],
-            userID: ''
+            userID: '',
+            git_link: ''
         });
 
         addNewProject(newProject).then(res => {

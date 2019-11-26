@@ -51,7 +51,7 @@ const Register = (props) => {
                         <h2 className="mb-4 font-weight-normal">Register</h2>
                         {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
                         <Form.Row>
-                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                            <Form.Group as={Col} className="mx-auto" md="12" controlId="validationCustom01">
                                 <Form.Label>Email address</Form.Label>
                                 <Form.Control
                                     type="email"
@@ -64,7 +64,7 @@ const Register = (props) => {
                             </Form.Group>
                         </Form.Row>
                         <Form.Row>
-                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                            <Form.Group as={Col} className="mx-auto" md="12" controlId="validationCustom02">
                                 <Form.Label>User Name</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -77,7 +77,7 @@ const Register = (props) => {
                             </Form.Group>
                         </Form.Row>
                         <Form.Row>
-                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                            <Form.Group as={Col} className="mx-auto" md="12" controlId="validationCustom03">
                                 <Form.Label>Github Profile</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -89,7 +89,7 @@ const Register = (props) => {
                             </Form.Group>
                         </Form.Row>
                         <Form.Row>
-                            <Form.Group as={Col} md="12" controlId="validationCustom03">
+                            <Form.Group as={Col} md="12" controlId="validationCustom04">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control
                                     type="password"

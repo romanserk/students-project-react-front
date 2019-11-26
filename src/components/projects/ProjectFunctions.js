@@ -57,9 +57,9 @@ export const addNewProject = project => {
             project_name: project.project_name,
             description: project.description,
             userID: project.userID,
+            git_link: project.git_link
         })
         .then(response => {
-            localStorage.setItem('usertoken', response.data)
             return response.data
         })
         .catch(err => {
