@@ -12,6 +12,9 @@ export const register = newUser => {
         }).then(response => {
             return response.data
         })
+        .catch(error => {
+            return error
+        })
 }
 
 

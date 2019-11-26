@@ -9,8 +9,8 @@ const Login = (props) => {
         user_name: '',
         password: ''
     })
+    const [error, setError] = useState('');
 
-    const [validUser, setValidUser] = useState(true);
 
 
     const onChange = (event) => {
@@ -34,7 +34,7 @@ const Login = (props) => {
         login(userToSubmit)
             .then(res => {
                 if (res.response && res.response.data.error) {
-                    setValidUser(false)
+                    setError(res.response.data.error)
                 } else {
                     localStorage.setItem('user_login', `${localStorage.usertoken}`);
                     props.setUserLoggedIn(true);
@@ -53,19 +53,17 @@ const Login = (props) => {
         <div className="container">
             <div className="row">
                 <div className="col-md-6 mt-5 mx-auto">
-                    <form noValidate onSubmit={onSubmit}>
+                    <form onSubmit={onSubmit}>
                         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                         <div className="form-group">
-                            {
-                                /* show if username or password is invalid */
-                                validUser ? null : <p className='text-danger'>Invalid username or password</p>
-                            }
+                            <p className='text-danger'>{error}</p>
                             <label htmlFor="user_name">User Name</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 name="user_name"
                                 placeholder="Enter User Name"
+                                required
                                 value={user.user_name}
                                 onChange={onChange}
                             />
@@ -77,6 +75,7 @@ const Login = (props) => {
                                 className="form-control"
                                 name="password"
                                 placeholder="Password"
+                                required
                                 value={user.password}
                                 onChange={onChange}
                             />

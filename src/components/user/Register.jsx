@@ -9,7 +9,7 @@ const Register = (props) => {
         password: '',
         github_profile: ''
     })
-
+    const [error, setError] = useState('');
 
     const onChange = (event) => {
         const name = event.target.name;
@@ -29,17 +29,23 @@ const Register = (props) => {
             github_profile: userToRegister.github_profile
         }
 
-        register(newUser).then(res => {
-            props.history.push(`/login`)
-        })
+        register(newUser)
+            .then(res => {
+                if (res.response && res.response.data.error) {
+                    setError(res.response.data.error)
+                } else {
+                    props.history.push(`/login`)
+                }
+            })
     }
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-6 mt-5 mx-auto">
-                    <form noValidate onSubmit={onSubmit}>
+                    <form onSubmit={onSubmit}>
                         <h1 className="h3 mb-3 font-weight-normal">Register</h1>
+                        <p className='text-danger'>{error}</p>
                         <div className="form-group">
                             <label htmlFor="email">Email address</label>
                             <input
@@ -47,6 +53,7 @@ const Register = (props) => {
                                 className="form-control"
                                 name="email"
                                 placeholder="Enter email"
+                                required
                                 value={userToRegister.email}
                                 onChange={onChange}
                             />
@@ -58,6 +65,7 @@ const Register = (props) => {
                                 className="form-control"
                                 name="user_name"
                                 placeholder="Enter User Name"
+                                required
                                 value={userToRegister.user_name}
                                 onChange={onChange}
                             />
@@ -81,6 +89,7 @@ const Register = (props) => {
                                 className="form-control"
                                 name="password"
                                 placeholder="Password"
+                                required
                                 value={userToRegister.password}
                                 onChange={onChange}
                             />
