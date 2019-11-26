@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { login } from './UserFunctions';
-import Alert from 'react-bootstrap/Alert';
+import { Alert, Form, Button, Col, Container, Row } from 'react-bootstrap';
 
 
 
@@ -37,6 +37,7 @@ const Login = (props) => {
             .then(res => {
                 if (res.response && res.response.data.error) {
                     setError(res.response.data.error)
+
                 } else {
                     localStorage.setItem('user_login', `${localStorage.usertoken}`);
                     props.setUserLoggedIn(true);
@@ -52,46 +53,42 @@ const Login = (props) => {
 
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-6 mt-5 mx-auto">
-                    <form onSubmit={onSubmit}>
-                        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-                        <div className="form-group">
-                            {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
-                            <label htmlFor="user_name">User Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="user_name"
-                                placeholder="Enter User Name"
-                                required
-                                value={user.user_name}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                placeholder="Password"
-                                required
-                                value={user.password}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn btn-lg btn-primary btn-block"
-                        >
-                            Sign in
-                            </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <Container>
+            <Row className="row">
+                <Col className="col-md-6 mt-5 pt-5 mx-auto">
+                    <Form onSubmit={onSubmit}>
+                        <Form.Row>
+                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                                {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
+                                <Form.Label>User Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="user_name"
+                                    placeholder="Enter User Name"
+                                    required
+                                    value={user.user_name}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} md="12" controlId="validationCustom03">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    required
+                                    value={user.password}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Button className="btn-block" type="submit">Submit form</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     )
 
 }
