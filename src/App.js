@@ -11,7 +11,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { checkLoggedIn } from './components/user/UserFunctions';
 import AuthContext from './context/authContext';
 import NavBar from './components/navigation/NavBar';
-import MySpinner from './components/hoc/Spinner'
+import MySpinner from './components/hoc/Spinner';
+import NotFoundPage from './components/pageError/NotFoundPage';
 const Profile = React.lazy(() => import('./components/user/Profile'));
 const Landing = React.lazy(() => import('./components/landing/Landing'));
 const Login = React.lazy(() => import('./components/user/Login'));
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/project/:projectname" exact component={SingleProject} />
                 <Route path="/profile/:username" exact component={Profile} />
                 <Route path="/profile" exact component={Profile} />
+                <Route path="*" component={NotFoundPage} />
               </Switch>
             </Suspense>
           )} />

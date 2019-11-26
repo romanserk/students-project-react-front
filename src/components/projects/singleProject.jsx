@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
-import AuthContext from '../../context/authContext';
 import jwt_decode from 'jwt-decode';
 import MySpinner from '../hoc/Spinner'
 import { Link } from 'react-router-dom';
