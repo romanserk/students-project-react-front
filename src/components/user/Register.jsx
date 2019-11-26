@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { register } from './UserFunctions'
+import Alert from 'react-bootstrap/Alert'
+
 
 const Register = (props) => {
 
@@ -9,7 +11,7 @@ const Register = (props) => {
         password: '',
         github_profile: ''
     })
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
 
     const onChange = (event) => {
         const name = event.target.name;
@@ -45,7 +47,7 @@ const Register = (props) => {
                 <div className="col-md-6 mt-5 mx-auto">
                     <form onSubmit={onSubmit}>
                         <h1 className="h3 mb-3 font-weight-normal">Register</h1>
-                        <p className='text-danger'>{error}</p>
+                        {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
                         <div className="form-group">
                             <label htmlFor="email">Email address</label>
                             <input

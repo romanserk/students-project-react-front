@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { login } from './UserFunctions';
+import Alert from 'react-bootstrap/Alert';
+
 
 
 
@@ -9,7 +11,7 @@ const Login = (props) => {
         user_name: '',
         password: ''
     })
-    const [error, setError] = useState('');
+    const [error, setError] = useState(null);
 
 
 
@@ -56,7 +58,7 @@ const Login = (props) => {
                     <form onSubmit={onSubmit}>
                         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
                         <div className="form-group">
-                            <p className='text-danger'>{error}</p>
+                            {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
                             <label htmlFor="user_name">User Name</label>
                             <input
                                 type="text"
