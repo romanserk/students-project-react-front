@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { register } from './UserFunctions'
-import Alert from 'react-bootstrap/Alert'
+import { Alert, Form, Button, Col, Container, Row } from 'react-bootstrap';
+
 
 
 const Register = (props) => {
@@ -42,70 +43,70 @@ const Register = (props) => {
     }
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-6 mt-5 mx-auto">
-                    <form onSubmit={onSubmit}>
-                        <h1 className="h3 mb-3 font-weight-normal">Register</h1>
-                        {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
-                        <div className="form-group">
-                            <label htmlFor="email">Email address</label>
-                            <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                placeholder="Enter email"
-                                required
-                                value={userToRegister.email}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="username">User Name</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="user_name"
-                                placeholder="Enter User Name"
-                                required
-                                value={userToRegister.user_name}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="github_profile">github profile</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="github_profile"
-                                placeholder="your github profile"
-                                value={userToRegister.github_profile}
-                                onChange={onChange}
-                            />
-                        </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                className="form-control"
-                                name="password"
-                                placeholder="Password"
-                                required
-                                value={userToRegister.password}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn btn-lg btn-primary btn-block"
-                        >
-                            Register!
-                            </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <Container>
+            <Row className="row">
+                <Col className="col-md-6 mt-5 pt-5 mx-auto">
+                    <Form onSubmit={onSubmit}>
+                        <h2 className="mb-4 font-weight-normal">Register</h2>
+                        {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
+                        <Form.Row>
+                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter email"
+                                    required
+                                    value={userToRegister.email}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                                <Form.Label>User Name</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="user_name"
+                                    placeholder="Enter User Name"
+                                    required
+                                    value={userToRegister.user_name}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
+                                <Form.Label>Github Profile</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="github_profile"
+                                    placeholder="your github profile"
+                                    value={userToRegister.github_profile}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Row>
+                            <Form.Group as={Col} md="12" controlId="validationCustom03">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    required
+                                    value={userToRegister.password}
+                                    onChange={onChange}
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                        <Button className="btn-block" type="submit">Submit</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
+
     )
 
 }

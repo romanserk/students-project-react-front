@@ -57,6 +57,7 @@ const Login = (props) => {
             <Row className="row">
                 <Col className="col-md-6 mt-5 pt-5 mx-auto">
                     <Form onSubmit={onSubmit}>
+                        <h2 className="mb-4 font-weight-normal">Login</h2>
                         <Form.Row>
                             <Form.Group as={Col} classname="mx-auto" md="12" controlId="validationCustom01">
                                 {error && <Alert variant="danger" ><p className="mb-0">{error}</p></Alert>}
@@ -84,7 +85,7 @@ const Login = (props) => {
                                 />
                             </Form.Group>
                         </Form.Row>
-                        <Button className="btn-block" type="submit">Submit form</Button>
+                        <Button className="btn-block" type="submit">Submit</Button>
                     </Form>
                 </Col>
             </Row>
