@@ -12,6 +12,8 @@ const Login = (props) => {
         password: ''
     })
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+
 
 
 
@@ -27,6 +29,8 @@ const Login = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        setLoading(true)
+
 
         const userToSubmit = {
             user_name: user.user_name,
@@ -37,7 +41,6 @@ const Login = (props) => {
             .then(res => {
                 if (res.response && res.response.data.error) {
                     setError(res.response.data.error)
-
                 } else {
                     localStorage.setItem('user_login', `${localStorage.usertoken}`);
                     props.setUserLoggedIn(true);
@@ -48,6 +51,7 @@ const Login = (props) => {
                     })
 
                 }
+                setLoading(false)
             })
     }
 
@@ -85,7 +89,13 @@ const Login = (props) => {
                                 />
                             </Form.Group>
                         </Form.Row>
-                        <Button className="btn-block" type="submit">Submit</Button>
+                        <Button
+                            className="btn-block"
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading ? 'Loading…' : 'Submit'}
+                        </Button>
                     </Form>
                 </Col>
             </Row>

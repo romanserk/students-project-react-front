@@ -13,6 +13,7 @@ const Register = (props) => {
         github_profile: ''
     })
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const onChange = (event) => {
         const name = event.target.name;
@@ -23,7 +24,8 @@ const Register = (props) => {
     }
 
     const onSubmit = (event) => {
-        event.preventDefault()
+        event.preventDefault();
+        setLoading(true);
 
         const newUser = {
             user_name: userToRegister.user_name,
@@ -39,6 +41,7 @@ const Register = (props) => {
                 } else {
                     props.history.push(`/login`)
                 }
+                setLoading(false);
             })
     }
 
@@ -101,7 +104,13 @@ const Register = (props) => {
                                 />
                             </Form.Group>
                         </Form.Row>
-                        <Button className="btn-block" type="submit">Submit</Button>
+                        <Button
+                            className="btn-block"
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading ? 'Loading…' : 'Submit'}
+                        </Button>
                     </Form>
                 </Col>
             </Row>
