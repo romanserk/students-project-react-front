@@ -1,5 +1,5 @@
 Front end part of students projects platform written in React js, in which students can share projects, and find participants/team in order to work together of projects.
-[link to the project page hosten on netlify](https://flamboyant-sinoussi-e7c4cb.netlify.com/).
+[link to the project page hosted on Netlify](https://flamboyant-sinoussi-e7c4cb.netlify.com/).
 
 
 Options enabled:
