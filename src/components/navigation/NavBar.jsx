@@ -1,11 +1,19 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import AuthNavItems from './AuthNavItems'
 
 
 const NavBar = () => {
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Content>
+                Sorry currently <strong>disabled</strong>
+            </Popover.Content>
+        </Popover>
+    );
 
     return (
 
@@ -18,7 +26,10 @@ const NavBar = () => {
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-light">Search</Button>
+                    <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                        <Button variant="outline-light">Search</Button>
+                    </OverlayTrigger>
+
                 </Form>
             </Navbar.Collapse>
         </Navbar>
