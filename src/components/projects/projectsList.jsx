@@ -80,7 +80,7 @@ const ProjectsList = (props) => {
                     </Card.Body>
                     <Card.Footer>
                         <Row >
-                            <Col sm={10}>
+                            <Col sm={8}>
                                 <ul className="p-0 m-0 list-inline">
                                     {elem.tool_ps.map((tool) => {
                                         return (
@@ -91,14 +91,14 @@ const ProjectsList = (props) => {
                                     })}
                                 </ul>
                             </Col>
-                            <Col sm={2}>
-                                <Row>
-                                    <img style={{ height: "15px" }} src={messagesIcon}></img>
+                            {!props.user_name ? <Col sm={4}>
+                                <Row className="float-right mr-1">
+                                    <img alt="comments" className="mt-1" style={{ height: "16px" }} src={messagesIcon}></img>
                                     <i className="ml-2"><p className="m-0 text-muted">{elem.messages.length}</p></i>
-                                    <img className="ml-4" style={{ height: "15px" }} src={participantsIcon}></img>
+                                    <img alt="participants" className="ml-4 mt-1" style={{ height: "16px" }} src={participantsIcon}></img>
                                     <i className="ml-2"><p className="m-0 text-muted">{elem.participants.length}</p></i>
                                 </Row>
-                            </Col>
+                            </Col> : null}
                         </Row>
                     </Card.Footer>
                 </Card >

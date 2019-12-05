@@ -35,10 +35,8 @@ const Profile = (props) => {
 
         getUser(props.history.location.pathname.slice(9))
 
-
-
         // eslint-disable-next-line
-    }, [props.location.state])
+    }, [props.location.state, loading])
 
 
 
@@ -48,7 +46,6 @@ const Profile = (props) => {
             <MySpinner />
             :
             <Container>
-                {console.log(props)}
                 <>
                     <Jumbotron className="mt-5 my-shadow">
                         <Col sm={8} className="mx-auto">
