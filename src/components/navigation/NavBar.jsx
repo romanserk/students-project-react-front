@@ -7,6 +7,7 @@ import AuthNavItems from './AuthNavItems'
 
 const NavBar = () => {
 
+
     const popover = (
         <Popover id="popover-basic">
             <Popover.Content>
