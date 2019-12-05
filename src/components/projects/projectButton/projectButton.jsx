@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import AuthContext from '../../../context/authContext';
+import { connect } from 'react-redux';
 
 
 
@@ -9,36 +9,41 @@ const ProjectButton = (props) => {
 
     return (
 
-        <AuthContext.Consumer>
-            {(context) =>
-                <>
-                    {props.project.userID === context.userData.ID ?
-                        <Button variant="danger" className="btn btn-md" onClick={props.deleteHandler}>
-                            Remove Project
-                        </Button>
-                        :
-                        null
-                    }
-                    {context.userLoggedIn && !props.participant && props.project.userID !== context.userData.ID ?
-                        <Button variant="info" className="btn btn-md" onClick={() => props.joinHandler(context)}>
-                            Join Project
-                        </Button>
-                        :
-                        null
-                    }
-                    {context.userLoggedIn && props.participant && props.project.userID !== context.userData.ID ?
-                        <Button variant="warning" className="btn btn-md" onClick={() => props.leaveHandler(context)}>
+
+        <>
+            {props.singleProject.userID === props.userData.ID ?
+                <Button variant="danger" className="btn btn-md mt-4" onClick={props.deleteHandler}>
+                    Remove Project
+                </Button>
+                :
+                props.loggedIn && !props.participant && props.singleProject.userID !== props.userData.ID ?
+                    <Button variant="info" className="btn btn-md mt-4" onClick={() => props.joinHandler()}>
+                        Join Project
+                    </Button>
+                    :
+                    props.loggedIn && props.participant && props.singleProject.userID !== props.userData.ID ?
+                        <Button variant="warning" className="btn btn-md mt-4" onClick={() => props.leaveHandler()}>
                             Leave Project
                         </Button>
                         :
                         null
-                    }
-                </>
             }
+        </>
 
-        </AuthContext.Consumer>
+
 
     )
 }
 
-export default ProjectButton
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.users.isLoggedIn,
+        userData: state.users.userData,
+        singleProject: state.projects.singleProject,
+        participant: state.projects.participant
+    };
+}
+
+
+
+export default connect(mapStateToProps)(ProjectButton)

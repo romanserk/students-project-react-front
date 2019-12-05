@@ -1,15 +1,15 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense } from 'react';
+import { connect } from 'react-redux';
+import * as actionType from './store/actions'
+
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import jwt_decode from 'jwt-decode';
-
 
 
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { checkLoggedIn } from './components/user/UserFunctions';
-import AuthContext from './context/authContext';
 import NavBar from './components/navigation/NavBar';
 import MySpinner from './components/hoc/Spinner';
 import NotFoundPage from './components/pageError/NotFoundPage';
@@ -23,37 +23,31 @@ const SingleProject = React.lazy(() => import('./components/projects/singleProje
 
 
 
-function App() {
-
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+const App = (props) => {
 
 
   const checkUser = async () => {
-    await checkLoggedIn(setUserLoggedIn)
+    await checkLoggedIn(props.setLoggedIn, props.setUserData)
   }
-  // eslint-disable-next-line
+
   useEffect(() => {
-    checkUser()
+    checkUser();
+    // eslint-disable-next-line
   }, [])
 
 
 
   return (
+    <div>
+      <BrowserRouter>
+        <div className="App">
 
-    <BrowserRouter>
-      <div className="App">
-        <AuthContext.Provider
-          value={{
-            userLoggedIn: userLoggedIn,
-            userData: userLoggedIn ? jwt_decode(localStorage.user_login) : {},
-            setUserLoggedIn: setUserLoggedIn
-          }}>
           <NavBar />
           <Route render={({ location }) => (
             <Suspense fallback={<MySpinner />}>
               <Switch location={location}>
                 <Route path="/" exact component={Landing} />
-                <Route path="/login" render={(props) => <Login setUserLoggedIn={setUserLoggedIn} {...props} />} />
+                <Route path="/login" render={(props) => <Login  {...props} />} />
                 <Route path="/register" exact component={Register} />
                 <Route path="/projects/add" exact component={addProjects} />
                 <Route path="/project/:projectname" exact component={SingleProject} />
@@ -63,12 +57,29 @@ function App() {
               </Switch>
             </Suspense>
           )} />
-        </AuthContext.Provider>
 
-      </div >
-    </BrowserRouter>
+
+        </div >
+      </BrowserRouter>
+    </div>
+
 
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.users.isLoggedIn
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setLoggedIn: (isLogged) => dispatch({ type: actionType.SET_LOGGED_IN, isLogged: isLogged }),
+    setUserData: (userData) => dispatch({ type: actionType.SET_USER_DATA, userData: userData }),
+  };
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

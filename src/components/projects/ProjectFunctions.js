@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+// http://localhost:400 0
+// https://infinite-plains-84143.herokuapp.co m
 
 
 export const getProjectsFromServer = (userName, userID) => {
@@ -46,8 +47,6 @@ export const getSingleProjectFromServer = (name, userID) => {
         })
         .catch(err => console.log(err))
 }
-
-
 
 
 
@@ -128,6 +127,36 @@ export const leaveProject = (userID, projectID) => {
 }
 
 
+export const getProjectCommentsFromServer = (projectID) => {
+    return axios
+        .get('https://infinite-plains-84143.herokuapp.com/messages',
+            {
+                params: {
+                    projectID: projectID
+                }
+            })
+        .then(response => {
+            return response.data.data;
+        })
+        .catch(err => console.log(err))
+}
+
+
+
+export const postComment = (comment) => {
+    return axios
+        .post('https://infinite-plains-84143.herokuapp.com/message/add', {
+            content: comment.content,
+            projectID: comment.projectID,
+            userID: comment.userID,
+        })
+        .then(response => {
+            return response.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
 
 
 

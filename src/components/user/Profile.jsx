@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Container } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import * as actionType from '../../store/actions'
 
+
+import { Container, Jumbotron, Col, Table } from 'react-bootstrap';
 import ProjectsList from '../projects/projectsList'
-import AuthContext from '../../context/authContext'
-
 import { getUserFromServer } from './UserFunctions'
-import jwt_decode from 'jwt-decode';
-
 import MySpinner from '../hoc/Spinner'
 
 
@@ -16,7 +15,6 @@ import Logout from './Logout';
 
 const Profile = (props) => {
 
-    const [user, setUser] = useState({})
     const [loading, setLoading] = useState(true)
 
     const getUser = async (username) => {
@@ -26,40 +24,21 @@ const Profile = (props) => {
                     props.history.push(`/`)
                     return
                 }
-                setUser(response)
+                props.setProfilePage(response)
+                setLoading(false)
             })
-    }
 
-    const generateUser = () => {
-        let localUser;
-
-        localUser = localStorage.user_login ? jwt_decode(localStorage.user_login) : null;
-
-        if (props.location.state) {
-            if (localUser && props.location.state.user === localUser.user_name && localUser.user_name === props.history.location.pathname.slice(9)) {
-                setUser(localUser)
-            } else {
-                getUser(props.location.state.user)
-            }
-        } else {
-            getUser(props.history.location.pathname.slice(9))
-        }
-
-        setLoading(false)
     }
 
 
     useEffect(() => {
 
-        generateUser()
+        getUser(props.history.location.pathname.slice(9))
+
+
 
         // eslint-disable-next-line
     }, [props.location.state])
-
-    const canLogOut = (context) => {
-
-        return context.userData.user_name === props.history.location.pathname.slice(9) ? <Logout /> : null
-    }
 
 
 
@@ -69,34 +48,48 @@ const Profile = (props) => {
             <MySpinner />
             :
             <Container>
-                <AuthContext.Consumer>
-                    {(context) => user.user_name &&
-                        <>
-                            <div className="jumbotron mt-5">
-                                <div className="col-sm-8 mx-auto">
-                                    <h1 className="text-center">{user.user_name}</h1>
-                                </div>
-                                <table className="table col-md-6 mx-auto">
-                                    <tbody>
-                                        <tr>
-                                            <td>Email</td>
-                                            <td>{user.email}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Github profile</td>
-                                            <td><a href={user.github_profile} target="_blanck">{user.github_profile}</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                {canLogOut(context)}
-                            </div>
-                            <ProjectsList user_name={user.user_name} userID={user.ID} />
-                        </>
-                    }
-                </AuthContext.Consumer>
+                {console.log(props)}
+                <>
+                    <Jumbotron className="mt-5 my-shadow">
+                        <Col sm={8} className="mx-auto">
+                            <h1 className="text-center">{props.profilePageData.user_name}</h1>
+                        </Col>
+                        <Table className="col-md-6 mx-auto">
+                            <tbody>
+                                <tr>
+                                    <td>Email</td>
+                                    <td>{props.profilePageData.email}</td>
+                                </tr>
+                                <tr>
+                                    <td>Github profile</td>
+                                    <td><a href={props.profilePageData.github_profile} target="_blanck">{props.profilePageData.github_profile}</a></td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                        {props.loggedIn && props.history.location.pathname.slice(9) === props.userData.user_name ? <Logout /> : null}
+                    </Jumbotron>
+                    <ProjectsList user_name={props.profilePageData.user_name} userID={props.userData.ID} />
+                </>
+
             </Container>
     )
 
+
+}
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.users.isLoggedIn,
+        userData: state.users.userData,
+        profilePageData: state.users.profilePageData
+    };
 }
 
-export default Profile
+const mapDispatchToProps = dispatch => {
+    return {
+        setLoggedIn: (isLogged) => dispatch({ type: actionType.SET_LOGGED_IN, isLogged: isLogged }),
+        setUserData: (userData) => dispatch({ type: actionType.SET_USER_DATA, userData: userData }),
+        setProfilePage: (profilePageData) => dispatch({ type: actionType.SET_PROFILE_PAGE_DATA, profilePageData: profilePageData }),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

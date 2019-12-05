@@ -35,7 +35,7 @@ export const login = user => {
 
 
 
-export const checkLoggedIn = (setUserLoggedIn) => {
+export const checkLoggedIn = (setLoggedIn, userData) => {
     const token = localStorage.user_login;
     if (token) {
         const decoded = jwt_decode(token)
@@ -43,9 +43,10 @@ export const checkLoggedIn = (setUserLoggedIn) => {
             .post('https://infinite-plains-84143.herokuapp.com/users/logged_in', decoded)
             .then(response => {
                 if (response.data === true) {
-                    setUserLoggedIn(true)
+                    setLoggedIn(true)
+                    userData(jwt_decode(localStorage.user_login))
                 } else {
-                    setUserLoggedIn(false)
+                    setLoggedIn(false)
                 }
             })
             .catch(err => {

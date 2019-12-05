@@ -1,6 +1,12 @@
 import React from 'react';
+
+import { connect } from 'react-redux';
+import * as actionType from '../../store/actions'
+
+
 import { withRouter } from 'react-router-dom';
-import AuthContext from '../../context/authContext'
+import { Button } from 'react-bootstrap';
+
 
 
 
@@ -8,24 +14,35 @@ import AuthContext from '../../context/authContext'
 const Logout = (props) => {
 
 
-    const logoutAction = (context) => {
+    const logoutAction = () => {
         localStorage.removeItem("user_login");
-        context.setUserLoggedIn(false);
-        context.userData = {};
+        props.setUserData({});
+        props.setLoggedIn(false)
         props.history.push(`/`);
     }
 
     return (
-        <AuthContext.Consumer>
-            {(context) =>
-                <button className="btn btn-lg btn-danger" onClick={() => logoutAction(context)}>
-                    Logout
-                </button>
-            }
-        </AuthContext.Consumer>
+
+        <Button variant="danger" size="md" onClick={() => logoutAction()}>
+            Logout
+        </Button>
+
     )
 
 }
 
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.users.isLoggedIn
+    };
+}
 
-export default withRouter(Logout);
+const mapDispatchToProps = dispatch => {
+    return {
+        setLoggedIn: () => dispatch({ type: actionType.SET_LOGGED_IN }),
+        setUserData: (userData) => dispatch({ type: actionType.SET_USER_DATA, userData: userData }),
+    };
+}
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Logout));

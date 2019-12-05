@@ -1,4 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+
+import { connect } from 'react-redux';
+import * as actionType from '../../store/actions'
+
+import jwt_decode from 'jwt-decode';
+
+
 import { login } from './UserFunctions';
 import { Alert, Form, Button, Col, Container, Row } from 'react-bootstrap';
 
@@ -43,7 +50,8 @@ const Login = (props) => {
                     setError(res.response.data.error)
                 } else {
                     localStorage.setItem('user_login', `${localStorage.usertoken}`);
-                    props.setUserLoggedIn(true);
+                    props.setLoggedIn(true);
+                    props.setUserData(jwt_decode(localStorage.user_login))
 
                     props.history.push({
                         pathname: `/profile/${userToSubmit.user_name}`,
@@ -51,7 +59,6 @@ const Login = (props) => {
                     })
 
                 }
-                setLoading(false)
             })
     }
 
@@ -104,5 +111,19 @@ const Login = (props) => {
 
 }
 
+const mapStateToProps = state => {
+    return {
+        loggedIn: state.users.isLoggedIn
+    };
+}
 
-export default Login
+const mapDispatchToProps = dispatch => {
+    return {
+        setLoggedIn: (isLogged) => dispatch({ type: actionType.SET_LOGGED_IN, isLogged: isLogged }),
+        setUserData: (userData) => dispatch({ type: actionType.SET_USER_DATA, userData: userData }),
+
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
