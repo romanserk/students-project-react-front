@@ -30,7 +30,6 @@ const Profile = (props) => {
 
     }
 
-
     useEffect(() => {
 
         getUser(props.history.location.pathname.slice(9))
