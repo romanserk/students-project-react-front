@@ -5,11 +5,14 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionType from '../../store/actions'
 
+import messagesIcon from '../../imgs/chat.png';
+import participantsIcon from '../../imgs/network.png';
 
 
 import { getProjectsFromServer } from './ProjectFunctions'
 
 import MySpinner from '../hoc/Spinner'
+import { Col, Row } from 'react-bootstrap';
 
 
 const ProjectsList = (props) => {
@@ -76,15 +79,27 @@ const ProjectsList = (props) => {
                         <Card.Text>{elem.description}</Card.Text>
                     </Card.Body>
                     <Card.Footer>
-                        <ul className="p-0 m-0 list-inline">
-                            {elem.tool_ps.map((tool) => {
-                                return (
-                                    <li key={tool.id} className="mr-5 list-inline-item">
-                                        <p className="mb-0">{tool.tool}</p>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+                        <Row >
+                            <Col sm={10}>
+                                <ul className="p-0 m-0 list-inline">
+                                    {elem.tool_ps.map((tool) => {
+                                        return (
+                                            <li key={tool.id} className="mr-5 list-inline-item">
+                                                <p className="mb-0">{tool.tool}</p>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </Col>
+                            <Col sm={2}>
+                                <Row>
+                                    <img style={{ height: "15px" }} src={messagesIcon}></img>
+                                    <i className="ml-2"><p className="m-0 text-muted">{elem.messages.length}</p></i>
+                                    <img className="ml-4" style={{ height: "15px" }} src={participantsIcon}></img>
+                                    <i className="ml-2"><p className="m-0 text-muted">{elem.participants.length}</p></i>
+                                </Row>
+                            </Col>
+                        </Row>
                     </Card.Footer>
                 </Card >
             })
