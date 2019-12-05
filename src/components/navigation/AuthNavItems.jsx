@@ -23,7 +23,7 @@ const AuthNavItems = (props) => {
                         className="ml-4 mr-4 p-2 color-white link-hover">
                         Profile
                     </NavLink>
-                    {/* <NavLink to="/notification" className="ml-4 mr-4 p-2 color-white link-hover disabled">Notification</NavLink> */}
+                    <NavLink to="/notification" className="ml-4 mr-4 p-2 color-white link-hover disabled">Notification</NavLink>
                 </> :
                 <>
                     <NavLink to="/login" className="ml-4 mr-4 p-2 color-white link-hover">Login</NavLink>
