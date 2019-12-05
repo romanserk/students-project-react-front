@@ -15,7 +15,8 @@ Options enabled:
 </ul>
 
 In order to run locally:
-
-download / clone the repository
-npm install
-npm start
+<ul>
+<li>download / clone the repository</li>
+<li>npm install</li>
+<li>npm start</li>
+</ul>
