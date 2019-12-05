@@ -5,13 +5,14 @@ Project scheme: https://github.com/romanserk/students-projects-node-back/blob/ma
 
 Options enabled:
 
-register
-login
-start new project
-remove project
-join project as a participant
-write comments
-
+<ul>
+<li>register</li>
+<li>login</li>
+<li>start new project</li>
+<li>remove project</li>
+<li>join project as a participant</li>
+<li>write comments</li>
+</ul>
 
 In order to run locally:
 
