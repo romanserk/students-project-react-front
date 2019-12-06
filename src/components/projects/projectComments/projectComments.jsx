@@ -110,7 +110,7 @@ const ProjectComments = (props) => {
                     <Col>
                         <ul className="list-unstyled">
                             {props.comments && props.comments.map(elem => {
-                                return <li className="pr-5 pl-2 pb-4" key={`${elem.id}${elem.content}`}>
+                                return <li className="pr-5 pl-2 pb-4" key={`${elem.id}${elem.userID}`}>
                                     <Media>
                                         <img
                                             width={50}

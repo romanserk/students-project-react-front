@@ -21,6 +21,7 @@ const ProjectsList = (props) => {
     const [loading, setLoading] = useState(true);
 
     const getProjects = async () => {
+
         await getProjectsFromServer(props.user_name, props.userID)
             .then(projectsRes => {
                 props.setProjects(projectsRes)
@@ -34,16 +35,15 @@ const ProjectsList = (props) => {
 
     useEffect(() => {
         getProjects();
-
         // eslint-disable-next-line
-    }, [props.user_name])
+    }, [])
 
     return (
         loading ?
             <MySpinner />
             :
             props.projects.map((elem) => {
-                return <Card className="m-3" key={elem.ID} >
+                return <Card className="m-3" key={`${elem.ID}${elem.project_name}`} >
                     <Card.Header>
                         <Card.Text>
                             <Link
@@ -108,7 +108,8 @@ const ProjectsList = (props) => {
 }
 const mapStateToProps = state => {
     return {
-        projects: state.projects.projects
+        projects: state.projects.projects,
+        search: state.projects.search
     };
 }
 

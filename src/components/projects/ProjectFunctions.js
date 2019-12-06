@@ -31,6 +31,20 @@ export const getProjectsFromServer = (userName, userID) => {
     }
 }
 
+export const getProjectsFromServerBySearch = (searchText) => {
+    return axios
+        .get('https://infinite-plains-84143.herokuapp.com/projects/search',
+            {
+                params: {
+                    searchText: searchText
+                }
+            })
+        .then(response => {
+            return response.data.data;
+        })
+        .catch(err => console.log(err))
+}
+
 
 
 export const getSingleProjectFromServer = (name, userID) => {
