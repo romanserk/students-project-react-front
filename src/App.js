@@ -15,6 +15,7 @@ import MySpinner from './components/hoc/Spinner';
 import NotFoundPage from './components/pageError/NotFoundPage';
 const Profile = React.lazy(() => import('./components/user/Profile'));
 const Landing = React.lazy(() => import('./components/landing/Landing'));
+const SearchResults = React.lazy(() => import('./components/landing/searchResults'));
 const Login = React.lazy(() => import('./components/user/Login'));
 const Register = React.lazy(() => import('./components/user/Register'));
 const addProjects = React.lazy(() => import('./components/projects/addProject'));
@@ -47,6 +48,7 @@ const App = (props) => {
             <Suspense fallback={<MySpinner />}>
               <Switch location={location}>
                 <Route path="/" exact component={Landing} />
+                <Route path="/results/:params" exact component={SearchResults} />
                 <Route path="/login" render={(props) => <Login  {...props} />} />
                 <Route path="/register" exact component={Register} />
                 <Route path="/projects/add" exact component={addProjects} />

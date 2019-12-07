@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 
 import * as actionType from '../../store/actions';
 
-import { getProjectsFromServerBySearch } from '../projects/ProjectFunctions'
+
 
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import AuthNavItems from './AuthNavItems'
@@ -13,18 +14,21 @@ import AuthNavItems from './AuthNavItems'
 const NavBar = (props) => {
 
 
-    const [searchText, setSearchText] = useState('')
+    const [searchText, setSearchText] = useState('');
 
 
     const onSubmit = (e) => {
         e.preventDefault()
-        getProjectsFromServerBySearch(searchText)
-            .then(projectsRes => {
-                props.setProjects(projectsRes)
-            }).catch(err => {
-                console.log(err)
-            });
+        props.history.push({
+            pathname: '/results/' + searchText,
+            state: {
+                searchText: searchText
+            }
+        }
+
+        )
     }
+
 
 
     return (
@@ -42,8 +46,16 @@ const NavBar = (props) => {
                         placeholder="Search"
                         className="mr-sm-2"
                         value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)} />
-                    <Button type="submit" variant="outline-light" >Search</Button>
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
+
+                    <Button
+                        variant="outline-light"
+                        className="btn"
+                        type="submit"
+                    >
+                        Search
+                    </Button>
                 </Form>
             </Navbar.Collapse>
         </Navbar>
@@ -65,4 +77,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));

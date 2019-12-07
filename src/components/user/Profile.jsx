@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as actionType from '../../store/actions'
 
-
+import MySpinner from '../hoc/Spinner'
 import { Container, Jumbotron, Col, Table } from 'react-bootstrap';
 import ProjectsList from '../projects/projectsList'
 import { getUserFromServer } from './UserFunctions'
-import MySpinner from '../hoc/Spinner'
+import { getProjectsFromServer } from '../projects/ProjectFunctions'
 
 
 
@@ -25,25 +25,35 @@ const Profile = (props) => {
                     return
                 }
                 props.setProfilePage(response)
-                setLoading(false)
+                getProjects(response)
+            }).catch(err => console.log(err))
+    }
+
+
+    const getProjects = async (data) => {
+
+        await getProjectsFromServer(props.history.location.pathname.slice(9), data.ID)
+            .then(projectsRes => {
+                props.setProjects(projectsRes)
             })
+            .then(res => {
+                setLoading(false);
+            }).catch(err => console.log(err));
 
     }
 
     useEffect(() => {
-
+        setLoading(true)
         getUser(props.history.location.pathname.slice(9))
-
         // eslint-disable-next-line
-    }, [props.location.state, loading])
+    }, [props.location.state])
 
 
 
 
     return (
         loading ?
-            <MySpinner />
-            :
+            <MySpinner /> :
             <Container>
                 <>
                     <Jumbotron className="mt-5 my-shadow">
@@ -64,9 +74,8 @@ const Profile = (props) => {
                         </Table>
                         {props.loggedIn && props.history.location.pathname.slice(9) === props.userData.user_name ? <Logout /> : null}
                     </Jumbotron>
-                    <ProjectsList user_name={props.profilePageData.user_name} userID={props.userData.ID} />
+                    <ProjectsList user={true} />
                 </>
-
             </Container>
     )
 
@@ -76,15 +85,16 @@ const mapStateToProps = state => {
     return {
         loggedIn: state.users.isLoggedIn,
         userData: state.users.userData,
-        profilePageData: state.users.profilePageData
+        profilePageData: state.users.profilePageData,
+        projects: state.projects.projects,
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setLoggedIn: (isLogged) => dispatch({ type: actionType.SET_LOGGED_IN, isLogged: isLogged }),
-        setUserData: (userData) => dispatch({ type: actionType.SET_USER_DATA, userData: userData }),
         setProfilePage: (profilePageData) => dispatch({ type: actionType.SET_PROFILE_PAGE_DATA, profilePageData: profilePageData }),
+        setProjects: (projects) => dispatch({ type: actionType.SET_PROJECTS, projects: projects }),
+
     };
 }
 

@@ -2,45 +2,39 @@ import React, { useEffect, useState } from 'react';
 import ProjectsList from '../projects/projectsList';
 
 import Container from 'react-bootstrap/Container';
-
 import { connect } from 'react-redux';
-import * as actionType from '../../store/actions'
-
-
-import { getProjectsFromServer } from '../projects/ProjectFunctions'
-
+import * as actionType from '../../store/actions';
 import MySpinner from '../hoc/Spinner'
 
+import { getProjectsFromServerBySearch } from '../projects/ProjectFunctions'
 
-const Landing = (props) => {
+
+const SearchResults = (props) => {
+
+    const [loading, setLoading] = useState(true)
 
 
-    const [loading, setLoading] = useState(true);
-
-    const getProjects = async () => {
-
-        await getProjectsFromServer(props.user_name, props.userID)
+    const getSearchResults = async (searchText) => {
+        await getProjectsFromServerBySearch(searchText)
             .then(projectsRes => {
                 props.setProjects(projectsRes)
-            })
-            .then(res => {
-                setLoading(false);
+                setLoading(false)
+            }).catch(err => {
+                console.log(err)
             });
-
     }
 
     useEffect(() => {
-        getProjects();
+        setLoading(true)
+        getSearchResults(props.location.state.searchText)
         // eslint-disable-next-line
-    }, [])
-
+    }, [props.location.state.searchText])
 
     return (
         <Container>
-            {loading ? <MySpinner /> :
-                <ProjectsList />
-            }
-
+            {loading ?
+                <MySpinner /> :
+                <ProjectsList />}
         </Container>
     )
 }
@@ -59,4 +53,4 @@ const mapDispatchToProps = dispatch => {
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Landing);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
