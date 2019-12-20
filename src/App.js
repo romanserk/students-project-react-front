@@ -1,6 +1,7 @@
 import React, { useEffect, Suspense } from 'react';
 import { connect } from 'react-redux';
 import * as actionType from './store/actions'
+import axios from './axios-rls'
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,8 +32,40 @@ const App = (props) => {
     await checkLoggedIn(props.setLoggedIn, props.setUserData)
   }
 
+  const countVisitor = () => {
+
+    const currD = new Date();
+    const date = `date: D${currD.getDate()}-M${currD.getMonth() + 1}-Y${currD.getFullYear()} time: ${currD.getHours()}:${currD.getMinutes()}:${currD.getSeconds()} timeZone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}`
+
+    const visitor = {
+      ip: '',
+      date: date,
+      website: 'students projects'
+    }
+
+    let exists = false
+
+    axios(`https://ipapi.co/json/`)
+      .then(response => {
+        visitor.ip = response.data.ip
+        axios.get(`${process.env.REACT_APP_API_FIREBASE_DATABASE}/visitors.json`)
+          .then(response => {
+            const data = response.data;
+            Object.keys(data).forEach(val => {
+              if (data[val].ip === visitor.ip && data[val].website === visitor.website) {
+                exists = true
+              }
+            })
+            if (!exists) axios.post('/visitors.json', visitor)
+          })
+
+      });
+
+  }
+
   useEffect(() => {
     checkUser();
+    countVisitor()
     // eslint-disable-next-line
   }, [])
 
