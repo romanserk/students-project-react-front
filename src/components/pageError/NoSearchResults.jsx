@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 
-const NotFoundPage = () => {
+const NoSearchResults = props => {
   return (
     <>
       <Alert variant="danger d-flex justify-content-center">
-        <h1>page not found</h1>
+        <h1>no results containing {props.searchText}</h1>
       </Alert>
       <Link
         to={{
@@ -20,4 +20,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default NoSearchResults;
