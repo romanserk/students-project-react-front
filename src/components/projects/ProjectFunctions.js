@@ -1,11 +1,11 @@
 import axios from "axios";
-const localUrl = "http://localhost:4000";
+const localUrll = "http://localhost:4000";
 const herokuUrl = "https://infinite-plains-84143.herokuapp.com";
 
 export const getProjectsFromServer = (userName, userID) => {
   if (userName) {
     return axios
-      .get(localUrl + "/projects/user", {
+      .get(herokuUrl + "/projects/user", {
         params: {
           user_name: userName,
           userID: userID
@@ -21,7 +21,7 @@ export const getProjectsFromServer = (userName, userID) => {
       .catch(err => console.log(err));
   } else {
     return axios
-      .get(localUrl + "/projects")
+      .get(herokuUrl + "/projects")
       .then(response => {
         return response.data.data;
       })
@@ -31,7 +31,7 @@ export const getProjectsFromServer = (userName, userID) => {
 
 export const getProjectsFromServerBySearch = searchText => {
   return axios
-    .get(localUrl + "/projects/search", {
+    .get(herokuUrl + "/projects/search", {
       params: {
         searchText: searchText
       }
@@ -44,7 +44,7 @@ export const getProjectsFromServerBySearch = searchText => {
 
 export const getSingleProjectFromServer = (name, userID) => {
   return axios
-    .get(localUrl + "/projects/single_project", {
+    .get(herokuUrl + "/projects/single_project", {
       params: {
         project_name: name,
         userID: userID
@@ -58,7 +58,7 @@ export const getSingleProjectFromServer = (name, userID) => {
 
 export const addNewProject = project => {
   return axios
-    .post(localUrl + "/projects/add", {
+    .post(herokuUrl + "/projects/add", {
       project_name: project.project_name,
       description: project.description,
       userID: project.userID,
@@ -74,7 +74,7 @@ export const addNewProject = project => {
 
 export const removeProject = ID => {
   return axios
-    .post(localUrl + "/projects/remove", {
+    .post(herokuUrl + "/projects/remove", {
       projectID: ID
     })
     .then(response => {
@@ -87,7 +87,7 @@ export const removeProject = ID => {
 
 export const addProjectTools = (paramtool, paramID) => {
   return axios
-    .post(localUrl + "/tools/add", {
+    .post(herokuUrl + "/tools/add", {
       tools: paramtool,
       ID: paramID
     })
@@ -101,7 +101,7 @@ export const addProjectTools = (paramtool, paramID) => {
 
 export const joinProject = (userID, projectID) => {
   return axios
-    .post(localUrl + "/projects/join", {
+    .post(herokuUrl + "/projects/join", {
       userID: userID,
       projectID: projectID
     })
@@ -115,7 +115,7 @@ export const joinProject = (userID, projectID) => {
 
 export const leaveProject = (userID, projectID) => {
   return axios
-    .post(localUrl + "/projects/leave", {
+    .post(herokuUrl + "/projects/leave", {
       userID: userID,
       projectID: projectID
     })
@@ -127,7 +127,7 @@ export const leaveProject = (userID, projectID) => {
 
 export const getProjectCommentsFromServer = projectID => {
   return axios
-    .get(localUrl + "/messages", {
+    .get(herokuUrl + "/messages", {
       params: {
         projectID: projectID
       }
@@ -140,7 +140,7 @@ export const getProjectCommentsFromServer = projectID => {
 
 export const postComment = comment => {
   return axios
-    .post(localUrl + "/message/add", {
+    .post(herokuUrl + "/message/add", {
       content: comment.content,
       projectID: comment.projectID,
       userID: comment.userID
