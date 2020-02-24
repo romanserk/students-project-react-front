@@ -1,5 +1,5 @@
 import axios from "axios";
-const localUrll = "http://localhost:4000";
+const localUrl = "http://localhost:4000";
 const herokuUrl = "https://infinite-plains-84143.herokuapp.com";
 
 export const getProjectsFromServer = (userName, userID) => {
@@ -151,4 +151,13 @@ export const postComment = comment => {
     .catch(err => {
       console.log(err);
     });
+};
+
+export const repositoryInfo = repoName => {
+  return axios
+    .get(`https://api.github.com/repos/romanserk/${repoName}`)
+    .then(res => {
+      return res;
+    })
+    .catch(error => alert(error));
 };

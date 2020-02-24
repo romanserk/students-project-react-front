@@ -14,7 +14,7 @@ const SearchResults = props => {
   const [haveResults, setHaveResults] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  const getSearchResults = async () => {
+  const getSearchResults = async searchText => {
     await getProjectsFromServerBySearch(searchText)
       .then(projectsRes => {
         if (projectsRes.length > 0) {
@@ -34,9 +34,9 @@ const SearchResults = props => {
   useEffect(() => {
     setLoading(true);
     setSearchText(props.location.state.searchText);
-    getSearchResults();
+    getSearchResults(props.location.state.searchText);
     // eslint-disable-next-line
-  }, [props.location.state.searchText]);
+  }, [props.location.state.searchText, searchText]);
 
   return (
     <Container>
