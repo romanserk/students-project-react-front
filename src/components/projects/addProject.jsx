@@ -5,6 +5,7 @@ import * as actionType from '../../store/actions'
 
 
 import { addNewProject, addProjectTools } from './ProjectFunctions';
+import CustomToolbarEditor from '../textEditor/TextEditor'
 
 import { InputGroup, FormControl, Form, Container, Button, Col, Row } from 'react-bootstrap'
 
@@ -19,6 +20,8 @@ const AddProject = (props) => {
         userID: '',
         git_link: ''
     })
+
+    const [description, setDescription] = useState("");
 
     const onChange = (event, index) => {
         const name = event.target.name;
@@ -41,7 +44,8 @@ const AddProject = (props) => {
 
         const newProject = {
             ...projectToAdd,
-            userID: props.userData.ID
+            userID: props.userData.ID,
+            description: description
         };
 
         setProjectToAdd({
@@ -81,16 +85,10 @@ const AddProject = (props) => {
                             onChange={onChange}
                         />
                     </InputGroup>
-                    <InputGroup className="mb-3">
-                        <FormControl
-                            placeholder="description"
-                            type="text"
-                            as="textarea"
-                            name="description"
-                            value={projectToAdd.description}
-                            onChange={onChange}
+                        <CustomToolbarEditor
+                            text={description}
+                            setText={setDescription}
                         />
-                    </InputGroup>
                     <InputGroup className="mb-3">
                         <FormControl
                             placeholder="github link"

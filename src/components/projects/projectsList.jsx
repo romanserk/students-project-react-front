@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from 'react-bootstrap/Card';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -9,9 +9,20 @@ import participantsIcon from '../../imgs/network.png';
 
 import { Col, Row } from 'react-bootstrap';
 
+import Editor from "draft-js-plugins-editor";
+import { convertFromRaw, EditorState } from "draft-js";
+
 
 const ProjectsList = (props) => {
+    // const [editorStateSummary, setEditorStateSummary] = useState(
+    //     createEditorStateWithText(" ")
+    // );    
 
+    const setRitchTextDescription = (description) => {
+        let rawEditorData = JSON.parse(description);
+        const contentState = convertFromRaw(rawEditorData);
+        return EditorState.createWithContent(contentState);
+    }
 
 
     return (
@@ -50,7 +61,11 @@ const ProjectsList = (props) => {
                             </Link>
                         </Card.Text>
                     </Card.Subtitle>
-                    <Card.Text>{elem.description}</Card.Text>
+                    <Editor
+                        editorState={setRitchTextDescription(elem.description)}
+                        readOnly={true}
+                        onChange={() => {}}
+                    />
                 </Card.Body>
                 <Card.Footer>
                     <Row >

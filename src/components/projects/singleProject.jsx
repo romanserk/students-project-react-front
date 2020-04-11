@@ -6,6 +6,11 @@ import * as actionType from "../../store/actions";
 import MySpinner from "../hoc/Spinner";
 import { Link } from "react-router-dom";
 
+
+import Editor, { createEditorStateWithText } from "draft-js-plugins-editor";
+import { convertFromRaw, EditorState } from "draft-js";
+
+
 import {
   getSingleProjectFromServer,
   joinProject,
@@ -19,6 +24,10 @@ import ProjectComments from "./projectComments/projectComments";
 
 const SingleProject = props => {
   const [loading, setLoading] = useState(true);
+
+  const [editorStateSummary, setEditorStateSummary] = useState(
+    createEditorStateWithText(" ")
+  );
 
   const deleteHandler = () => {
     removeProject(props.singleProject.ID)
@@ -50,10 +59,18 @@ const SingleProject = props => {
         }
       });
       props.setSingleProject(project);
+      setReachText(project.description)
       setLoading(false);
     });
+    //console.log(EditorState.createWithContent(" asdasd "))
   };
 
+  const setReachText = (description) => {
+    let rawEditorData = JSON.parse(description);
+    const contentState = convertFromRaw(rawEditorData);
+    setEditorStateSummary(EditorState.createWithContent(contentState));
+
+  }
   useEffect(() => {
     getProject(props.history.location.pathname.slice(9));
     // eslint-disable-next-line
@@ -66,9 +83,11 @@ const SingleProject = props => {
       <Card className="mt-5 p-3">
         <Card.Body>
           <Card.Title>{props.singleProject.project_name}</Card.Title>
-          <Card.Text className="mt-4">
-            {props.singleProject.description}
-          </Card.Text>
+          <Editor
+                editorState={editorStateSummary}
+                readOnly={true}
+                onChange={() => {}}
+          />
           {props.singleProject.git_link ? (
             <GithubProjectInfo
               setLoading={setLoading}
