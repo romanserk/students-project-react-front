@@ -7,7 +7,7 @@ import MySpinner from "../hoc/Spinner";
 import { Link } from "react-router-dom";
 
 
-import Editor, { createEditorStateWithText } from "draft-js-plugins-editor";
+import { Editor } from 'react-draft-wysiwyg';
 import { convertFromRaw, EditorState } from "draft-js";
 
 
@@ -26,7 +26,7 @@ const SingleProject = props => {
   const [loading, setLoading] = useState(true);
 
   const [editorStateSummary, setEditorStateSummary] = useState(
-    createEditorStateWithText(" ")
+    EditorState.createEmpty()
   );
 
   const deleteHandler = () => {
@@ -62,7 +62,6 @@ const SingleProject = props => {
       setReachText(project.description)
       setLoading(false);
     });
-    //console.log(EditorState.createWithContent(" asdasd "))
   };
 
   const setReachText = (description) => {
@@ -84,9 +83,9 @@ const SingleProject = props => {
         <Card.Body>
           <Card.Title>{props.singleProject.project_name}</Card.Title>
           <Editor
+                toolbarHidden
                 editorState={editorStateSummary}
                 readOnly={true}
-                onChange={() => {}}
           />
           {props.singleProject.git_link ? (
             <GithubProjectInfo

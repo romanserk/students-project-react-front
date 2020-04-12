@@ -9,7 +9,7 @@ import participantsIcon from '../../imgs/network.png';
 
 import { Col, Row } from 'react-bootstrap';
 
-import Editor from "draft-js-plugins-editor";
+import { Editor } from 'react-draft-wysiwyg';
 import { convertFromRaw, EditorState } from "draft-js";
 
 
@@ -62,9 +62,9 @@ const ProjectsList = (props) => {
                         </Card.Text>
                     </Card.Subtitle>
                     <Editor
+                        toolbarHidden
                         editorState={setRitchTextDescription(elem.description)}
                         readOnly={true}
-                        onChange={() => {}}
                     />
                 </Card.Body>
                 <Card.Footer>

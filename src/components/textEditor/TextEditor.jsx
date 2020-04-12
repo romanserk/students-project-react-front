@@ -1,81 +1,74 @@
 /* eslint-disable react/no-multi-comp */
 import React, {Component } from "react";
 
-import Editor, { createEditorStateWithText } from "draft-js-plugins-editor";
-import "../../../node_modules/draft-js-static-toolbar-plugin/lib/plugin.css";
+import { Editor } from 'react-draft-wysiwyg';
+import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import colorPicIcon from '../../imgs/colorPicker.svg'
 
-import { convertToRaw, convertFromRaw, RichUtils, EditorState } from "draft-js";
+import PropTypes from 'prop-types';
+import { BlockPicker } from 'react-color';
 
-import editorStyles from "./editorStyles.css";
+import { convertToRaw, convertFromRaw, EditorState } from "draft-js";
+import './editorStyles.css'
 
-import createToolbarPlugin, { Separator } from "draft-js-static-toolbar-plugin";
-import {
-  ItalicButton,
-  BoldButton,
-  UnderlineButton,
-  CodeButton,
-  HeadlineOneButton,
-  HeadlineTwoButton,
-  HeadlineThreeButton,
-  UnorderedListButton,
-  OrderedListButton,
-  BlockquoteButton,
-  CodeBlockButton,
-} from "draft-js-buttons";
+class ColorPic extends Component {
+  static propTypes = {
+    expanded: PropTypes.bool,
+    onExpandEvent: PropTypes.func,
+    onChange: PropTypes.func,
+    currentState: PropTypes.object,
+  };
 
-class HeadlinesPicker extends Component {
-  componentDidMount() {
-    setTimeout(() => { window.addEventListener('click', this.onWindowClick); });
+  stopPropagation = (event) => {
+    event.stopPropagation();
+  };
+
+  onChange = (color) => {
+    const { onChange } = this.props;
+    onChange('color', color.hex);
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('click', this.onWindowClick);
-  }
-
-  onWindowClick = () =>
-    // Call `onOverrideContent` again with `undefined`
-    // so the toolbar can show its regular content again.
-    this.props.onOverrideContent(undefined);
+  renderModal = () => {
+    const { color } = this.props.currentState;
+    return (
+      <div
+        onClick={this.stopPropagation}
+      >
+        <BlockPicker color={color} onChangeComplete={this.onChange} />
+      </div>
+    );
+  };
 
   render() {
-    const buttons = [HeadlineOneButton, HeadlineTwoButton, HeadlineThreeButton];
+    const { expanded, onExpandEvent } = this.props;
     return (
-      <div>
-        {buttons.map((Button, i) => // eslint-disable-next-line
-          <Button key={i} {...this.props} />
-        )}
+      <div
+        aria-haspopup="true"
+        aria-expanded={expanded}
+        aria-label="rdw-color-picker"
+      >
+        <div
+          onClick={onExpandEvent}
+        >
+          <img
+            style={{minHeight: "20px", minWidth: "20px", marginTop: "4px"}}
+            src={colorPicIcon}
+            alt=""
+          />
+        </div>
+        {expanded ? this.renderModal() : undefined}
       </div>
     );
   }
 }
 
-class HeadlinesButton extends Component {
-  onClick = () =>
-    // A button can call `onOverrideContent` to replace the content
-    // of the toolbar. This can be useful for displaying sub
-    // menus or requesting additional information from the user.
-    this.props.onOverrideContent(HeadlinesPicker);
-
-  render() {
-    return (
-      <div className={editorStyles.headlineButtonWrapper}>
-        <button onClick={this.onClick} className={editorStyles.headlineButton}>
-          H
-        </button>
-      </div>
-    );
-  }
-}
-
-const toolbarPlugin = createToolbarPlugin();
-const { Toolbar } = toolbarPlugin;
-const plugins = [toolbarPlugin];
 
 export default class CustomToolbarEditor extends Component {
   state = {
-    editorState: createEditorStateWithText("project description"),
+    editorState: this.props.text ?  EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.text))) : EditorState.createEmpty(),
     field: "",
   };
+
 
 
   onChange = (editorState) => {
@@ -88,43 +81,33 @@ export default class CustomToolbarEditor extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if(this.props.field !== this.state.field) {
+    if(this.props.field !== this.state.field && this.props.text) {
       this.setState({
         editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.text))),
         field: this.props.field
       });
     }
   }
-  focus = () => {
-    this.editor.focus();
-  };
+
   render() {
     return (
       <div>
-        <div className={editorStyles.editor} onClick={this.focus}>
-          <Toolbar>
-            {(externalProps) => (
-              <div style={{ display: "flex" }}>
-                <BoldButton {...externalProps} />
-                <ItalicButton {...externalProps} />
-                <UnderlineButton {...externalProps} />
-                <CodeButton {...externalProps} />
-                <Separator {...externalProps} />
-                <HeadlinesButton {...externalProps} />
-                <UnorderedListButton {...externalProps} />
-                <OrderedListButton {...externalProps} />
-                <BlockquoteButton {...externalProps} />
-                <CodeBlockButton {...externalProps} />
-              </div>
-            )}
-          </Toolbar>
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-            plugins={plugins}
-            ref={(element) => { this.editor = element; }}
+        <Editor
+           editorState={this.state.editorState}
+           onEditorStateChange={this.onChange}
+           handlePastedText={() => false}
+            wrapperClassName="wrapper-class"
+            editorClassName="editor-class"
+            toolbarClassName="toolbar-class"
+            toolbar={{
+              inline: { inDropdown: false },
+              list: { inDropdown: false },
+              textAlign: { inDropdown: false },
+              link: { inDropdown: true },
+              history: { inDropdown: false },
+              colorPicker: { component: ColorPic },
+            }}
           />
-        </div>
       </div>
     );
   }
