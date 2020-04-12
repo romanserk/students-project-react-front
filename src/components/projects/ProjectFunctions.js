@@ -15,7 +15,6 @@ export const getProjectsFromServer = (userName, userID) => {
         response.data.prticipant_in.forEach(part => {
           response.data.opned_projects.push(part.project);
         });
-        console.log(response.data)
 
         return response.data.opned_projects;
       })
