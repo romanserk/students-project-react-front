@@ -82,6 +82,7 @@ const SingleProject = props => {
       <Card className="mt-5 p-3">
         <Card.Body>
           <Card.Title>{props.singleProject.project_name}</Card.Title>
+          <textarea />
           <Editor
                 toolbarHidden
                 editorState={editorStateSummary}

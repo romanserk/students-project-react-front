@@ -1,62 +1,13 @@
-.editor :global(.public-DraftEditor-content) {
-  min-height: 140px;
-}
-
-.headlineButtonWrapper {
-  display: inline-block;
-}
-
-.headlineButton {
-  background: #fbfbfb;
-  color: #888;
-  font-size: 18px;
-  border: 0;
-  padding-top: 5px;
-  vertical-align: bottom;
-  height: 34px;
-  width: 36px;
-}
-
-.headlineButton:hover,
-.headlineButton:focus {
-  background: #f3f3f3;
-}
-
-.DraftEditor-root  {
-  margin-top: 10px;
-  box-sizing: border-box;
-  cursor: text;
-  padding: 16px;
-  border-radius: 2px;
-  margin-bottom: 2em;
-  background: #fefefe;
+.DraftEditor-root {
   min-height: 100px;
+  border: 1px solid rgb(223, 223, 223);
+  background-color: #fff;
+  margin-bottom: 20px;
 }
 
-.draftJsToolbar__separator__3U7qt + div>button {
-  background: none;
-  border: none;
-  padding-top: 5px;
-  color: #888;
-  font-size: 1.3rem;
-  height: 100%;
-  font-weight: 600;
-}
-.draftJsToolbar__separator__3U7qt + div>button:hover {
-  background: #f3f3f3;
-}
-
-.draftJsToolbar__separator__3U7qt{
-  height: 40px;
-}
-
-.draftJsToolbar__button__qi1gf {
-  height: 100%;
-}
-.draftJsToolbar__toolbar__dNtBH {
-  box-shadow: none;
-}
-
-.draftJsToolbar__toolbar__dNtBH+.DraftEditor-root {
-  border: 1px solid rgb(216, 216, 216);
+.block-picker {
+  margin-left: -73px;
+  margin-top: 15px;
+  z-index: 100!important;
+  position: absolute!important;
 }

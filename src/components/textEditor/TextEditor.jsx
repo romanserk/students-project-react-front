@@ -77,7 +77,6 @@ export default class CustomToolbarEditor extends Component {
       editorState,
     });
     this.props.setText(JSON.stringify(raw));
-    console.log(JSON.stringify(raw))
   };
 
   componentDidUpdate(prevProps) {
