@@ -15,6 +15,7 @@ export const getProjectsFromServer = (userName, userID) => {
         response.data.prticipant_in.forEach(part => {
           response.data.opned_projects.push(part.project);
         });
+        console.log(response.data)
 
         return response.data.opned_projects;
       })
@@ -161,15 +162,6 @@ export const repositoryInfo = repoName => {
     })
     .catch(error => alert(error));
 };
-
-var tempArr = [1,2,3,4,5,6];
-
-tempArr = tempArr.reduce(() => {
-  return  5;
-})
-
-console.log(tempArr)
-
 
 
 
