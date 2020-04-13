@@ -1,7 +1,6 @@
 .DraftEditor-root {
   min-height: 100px;
   background-color: #fff;
-  
 }
 
 .block-picker {
@@ -15,4 +14,9 @@
   border: 1px solid rgb(214, 214, 214);
   background-color: #fff;
   margin-bottom: 20px;
+}
+
+.public-DraftStyleDefault-block {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }

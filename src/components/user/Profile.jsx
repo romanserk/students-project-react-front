@@ -52,31 +52,32 @@ const Profile = (props) => {
 
 
     return (
-        loading ?
+        <>
+        {loading ?
             <MySpinner /> :
             <Container>
-                <>
-                    <Jumbotron className="mt-5 my-shadow">
-                        <Col sm={8} className="mx-auto">
-                            <h1 className="text-center">{props.profilePageData.user_name}</h1>
-                        </Col>
-                        <Table className="col-md-6 mx-auto">
-                            <tbody>
-                                <tr>
-                                    <td>Email</td>
-                                    <td>{props.profilePageData.email}</td>
-                                </tr>
-                                <tr>
-                                    <td>Github profile</td>
-                                    <td><a href={props.profilePageData.github_profile} target="_blanck">{props.profilePageData.github_profile}</a></td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                        {props.loggedIn && props.history.location.pathname.slice(9) === props.userData.user_name ? <Logout /> : null}
-                    </Jumbotron>
-                    <ProjectsList user={true} />
-                </>
-            </Container>
+                <Jumbotron className="mt-5 my-shadow">
+                    <Col sm={8} className="mx-auto">
+                        <h1 className="text-center">{props.profilePageData.user_name}</h1>
+                    </Col>
+                    <Table className="col-md-8 mx-auto">
+                        <tbody>
+                            <tr>
+                                <td>Email</td>
+                                <td>{props.profilePageData.email}</td>
+                            </tr>
+                            <tr>
+                                <td>Github profile</td>
+                                <td><a href={props.profilePageData.github_profile} target="_blank" rel="noopener noreferrer">{props.profilePageData.github_profile}</a></td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                    {props.loggedIn && props.history.location.pathname.slice(9) === props.userData.user_name ? <Logout /> : null}
+                </Jumbotron>
+                <ProjectsList user={true} />
+            </Container>}
+        </>
+        
     )
 
 
