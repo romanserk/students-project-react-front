@@ -155,7 +155,7 @@ export const postComment = comment => {
 
 export const repositoryInfo = repoName => {
   return axios
-    .get(`https://api.github.com/repos/GuySarkinsky/${repoName}`)
+    .get(`https://api.github.com/repos/romanserk/${repoName}`)
     .then(res => {
       return res;
     })
